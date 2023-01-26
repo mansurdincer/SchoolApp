@@ -1,0 +1,33 @@
+﻿@model Parent
+<form asp-action="Create">
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var child in Model.Children)
+                {
+                    <tr>
+                        <td>@child.Id</td>
+                        <td>
+                            <input asp-for="@child.Name" />
+                            <span asp-validation-for="@child.Name"></span>
+                        </td>                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+</form>

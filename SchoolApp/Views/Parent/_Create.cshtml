@@ -1,0 +1,52 @@
+﻿@model Parent
+
+<div class="modal fade" id="addParent">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="addParentLabel">Add Parent</h4>
+                <button type="button" class="close" data-bs-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="Create">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                   @* <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var child in Model.Children)
+                                {
+                                    <tr>
+                                        <td>@child.Id</td>
+                                        <td>
+                                            <input asp-for="@child.Name" />
+                                            <span asp-validation-for="@child.Name"></span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>*@
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal" data-controller="Parent" data-action="Create">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
