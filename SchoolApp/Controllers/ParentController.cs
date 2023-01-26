@@ -29,16 +29,16 @@ namespace SchoolApp.Controllers
 
         public IActionResult Create()
         {
-            Parent parent = new Parent()
-            {
-                Children = new List<Child>()
-            };
+            Parent parent = new Parent();
+            //{
+            //    Children = new List<Child>()
+            //};
 
-            parent.Name = "Mansur";
+            //parent.Name = "Mansur";
 
             //add 2 child objects to the parent
-            parent.Children.Add(new Child { Name = "Osman" });
-            parent.Children.Add(new Child { Name = "Ahsen" });
+            parent.Children.Add(new Child { Id = 1, Name = "Osman" });
+            parent.Children.Add(new Child { Id = 2, Name = "Ahsen" });
 
             //return View(parent);
 
@@ -48,15 +48,13 @@ namespace SchoolApp.Controllers
         [HttpPost]
         public IActionResult Create(Parent parent)
         {
-            if (ModelState.IsValid)
-            {
-                _db.Parents.Add(parent);
-                _db.Children.AddRange(parent.Children);
-
+           // if (ModelState.IsValid)
+            //{
+                _db.Add(parent);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            return View(parent);
+            //}
+           // return View(parent);
         }
 
         public IActionResult Edit(int id)

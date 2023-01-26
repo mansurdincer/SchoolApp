@@ -18,8 +18,8 @@
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name"></span>
                     </div>
-                   @* <div>
-                        <table>
+                    <div>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -27,19 +27,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var child in Model.Children)
+
+                                @for(int i = 0; i<Model.Children.Count; i++)
                                 {
                                     <tr>
-                                        <td>@child.Id</td>
                                         <td>
-                                            <input asp-for="@child.Name" />
-                                            <span asp-validation-for="@child.Name"></span>
+                                            <input asp-for="Children[i].Id" class="form-control" />
+                                            <span asp-validation-for="Children[i].Id"></span>
+                                        </td>
+                                        <td>
+                                            <input asp-for="Children[i].Name" class="form-control" />
+                                            <span asp-validation-for="Children[i].Name"></span>
                                         </td>
                                     </tr>
                                 }
+
+                               @* @foreach (var child in Model.Children)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input asp-for="@child.Id" class="form-control" />
+                                            <span asp-validation-for="@child.Id"></span>
+                                        </td>
+                                        <td>
+                                            <input asp-for="@child.Name" class="form-control" />
+                                            <span asp-validation-for="@child.Name"></span>
+                                        </td>
+                                    </tr>
+                                }*@
+
                             </tbody>
                         </table>
-                    </div>*@
+                    </div>
                 </form>
             </div>
 
