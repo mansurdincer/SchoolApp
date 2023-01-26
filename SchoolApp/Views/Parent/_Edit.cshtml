@@ -1,18 +1,19 @@
 ﻿@model Parent
 
-<div class="modal fade" id="addParent">
+<div class="modal fade" id="editParent">
     <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title" id="addParentLabel">Add Parent</h4>
+                <h4 class="modal-title" id="editParentLabel">Edit Parent</h4>
                 <button type="button" class="close" data-bs-dismiss="modal">
                     <span>&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <form action="Create">
+                <form asp-action="Edit">
+                    <input type="hidden" asp-for="Id" />
                     <div class="form-group">
                         <label asp-for="Name"></label>
                         <input asp-for="Name" class="form-control" />
@@ -28,9 +29,12 @@
                             </thead>
                             <tbody>
 
-                                @for(int i = 0; i<Model.Children.Count; i++)
+                                @for (int i = 0; i < Model.Children.Count; i++)
                                 {
-                                    <tr>                                       
+                                    <tr>
+                                        <td>
+                                            <input asp-for="Children[i].Id" class="form-control">
+                                        </td>
                                         <td>
                                             <input asp-for="Children[i].Name" class="form-control" />
                                             <span asp-validation-for="Children[i].Name"></span>
@@ -38,19 +42,6 @@
                                     </tr>
                                 }
 
-                               @* @foreach (var child in Model.Children)
-                                {
-                                    <tr>
-                                        <td>
-                                            <input asp-for="@child.Id" class="form-control" />
-                                            <span asp-validation-for="@child.Id"></span>
-                                        </td>
-                                        <td>
-                                            <input asp-for="@child.Name" class="form-control" />
-                                            <span asp-validation-for="@child.Name"></span>
-                                        </td>
-                                    </tr>
-                                }*@
 
                             </tbody>
                         </table>
@@ -60,7 +51,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-save="modal" data-controller="Parent" data-action="Create">Save changes</button>
+                <button type="button" class="btn btn-primary" data-save="modal" data-controller="Parent" data-action="Edit">Save changes</button>
             </div>
         </div>
     </div>

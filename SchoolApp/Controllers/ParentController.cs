@@ -29,7 +29,7 @@ namespace SchoolApp.Controllers
 
         public IActionResult Create()
         {
-            Parent parent = new Parent();
+            Parent parent = new();
             //{
             //    Children = new List<Child>()
             //};
@@ -37,8 +37,8 @@ namespace SchoolApp.Controllers
             //parent.Name = "Mansur";
 
             //add 2 child objects to the parent
-            parent.Children.Add(new Child { Id = 1, Name = "Osman" });
-            parent.Children.Add(new Child { Id = 2, Name = "Ahsen" });
+            parent.Children.Add(new Child { Name = "Osman" });
+            parent.Children.Add(new Child { Name = "Ahsen" });
 
             //return View(parent);
 
@@ -60,7 +60,11 @@ namespace SchoolApp.Controllers
         public IActionResult Edit(int id)
         {
             var parent = _db.Parents.FirstOrDefault(p => p.Id == id);
-            return View(parent);
+
+            //add all children to the parent
+            parent.Children = _db.Children.Where(c => c.ParentId == id).ToList();
+
+            return PartialView("_Edit", parent);
         }
 
         [HttpPost]
@@ -69,8 +73,25 @@ namespace SchoolApp.Controllers
             if (!ModelState.IsValid)
             {
                 _db.Parents.Update(parent);
+
+                foreach (var child in parent.Children)
+                {
+                    if (child.Id == 0)
+                    {
+                        _db.Children.Add(child);
+                    }
+                    else if (child.Id > 0)
+                    {
+                        _db.Children.Update(child);
+                    }
+                    else if (child.Id < 0)
+                    {
+                        _db.Children.Remove(child);
+                    }
+                }
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+
+                //return RedirectToAction("Index");
             }
             return View(parent);
         }
