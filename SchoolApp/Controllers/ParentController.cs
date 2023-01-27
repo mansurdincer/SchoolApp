@@ -24,24 +24,16 @@ namespace SchoolApp.Controllers
         {
             var parent = _db.Parents.Include(p => p.Children).FirstOrDefault(p => p.Id == id);
 
-            return View(parent);
+            return PartialView("_Details", parent);
         }
 
         public IActionResult Create()
         {
             Parent parent = new();
-            //{
-            //    Children = new List<Child>()
-            //};
-
-            //parent.Name = "Mansur";
-
-            //add 2 child objects to the parent
-            parent.Children.Add(new Child { Name = "Osman" });
-            parent.Children.Add(new Child { Name = "Ahsen" });
-
-            //return View(parent);
-
+            
+            parent.Children.Add(new Child { Name = "" });
+            parent.Children.Add(new Child { Name = "" });
+            
             return PartialView("_Create", parent);
         }
 
@@ -49,19 +41,17 @@ namespace SchoolApp.Controllers
         public IActionResult Create(Parent parent)
         {
            // if (ModelState.IsValid)
-            //{
+           // {
                 _db.Add(parent);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
-            //}
-           // return View(parent);
+           // }
+           //return View(parent);
         }
 
         public IActionResult Edit(int id)
         {
             var parent = _db.Parents.FirstOrDefault(p => p.Id == id);
-
-            //add all children to the parent
             parent.Children = _db.Children.Where(c => c.ParentId == id).ToList();
 
             return PartialView("_Edit", parent);
@@ -91,9 +81,23 @@ namespace SchoolApp.Controllers
                 }
                 _db.SaveChanges();
 
-                //return RedirectToAction("Index");
             }
             return View(parent);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var parent = _db.Parents.FirstOrDefault(p => p.Id == id);
+            parent.Children = _db.Children.Where(c => c.ParentId == id).ToList();
+            return PartialView("_Delete", parent);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Parent parent)
+        {
+            _db.Parents.Remove(parent);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
