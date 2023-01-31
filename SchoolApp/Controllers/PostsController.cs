@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ProjectModel;
 using SchoolApp.Data;
 using SchoolApp.Models;
 
@@ -41,6 +42,9 @@ namespace SchoolApp.Controllers
                 return NotFound();
             }
 
+            //send comment with post to the view
+            //post.Comments = _context.Comments.Where(c => c.PostId == id).ToList();
+            
             return View(post);
         }
 

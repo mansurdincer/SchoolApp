@@ -18,38 +18,48 @@
         </dd>
     </dl>
 
-    <h4>Comment</h4>
+    <h4>Comments</h4>
     <hr />
 
     <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Comment</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var child in Model.Comments)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => child.Content)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+
+        @foreach (var child in Model.Comments)
+        {
+
+            <div class="card">
+                <div class="card-header">
+                    Mansur
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>@Html.DisplayFor(modelItem => child.Content)</p>
+                    </blockquote>
+                </div>
+            </div>
+
+            <br />
+        }
+
     </div>
 
 
     <form asp-action="AddComment">
         <div class="form-group">
             <label asp-for="Content"></label>
-            <input asp-for="Content" class="form-control" />
+
+            <div class="row justify-content-around">
+                <div class="col-md-11">
+                    <input asp-for="Content" class="form-control" />
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                
+            </div>
             <span asp-validation-for="Content" class="text-danger"></span>
         </div>
         <input type="hidden" asp-for="PostId" value="@Model.PostId" />
-        <button type="submit" class="btn btn-primary">Submit</button>
+
     </form>
 
 </div>
