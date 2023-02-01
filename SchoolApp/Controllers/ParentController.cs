@@ -40,13 +40,13 @@ namespace SchoolApp.Controllers
         [HttpPost]
         public IActionResult Create(Parent parent)
         {
-           // if (ModelState.IsValid)
-           // {
+            if (ModelState.IsValid)
+            {
                 _db.Add(parent);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
-           // }
-           //return View(parent);
+            }
+            return View(parent);
         }
 
         public IActionResult Edit(int id)
