@@ -19,15 +19,15 @@
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name"></span>
                     </div>
-                    <div>
-                        <table class="table">
+                    <div style="height:250px; overflow-y:auto;">
+                        <table id="ChildTable" class="table">
                             <thead>
                                 <tr>
                                     <th>ChildId</th>
-                                    <th>ParentId</th>
+                                    @*<th>ParentId</th>*@
                                     <th>Child Name</th>
                                     <th style="width:75px;">
-                                        <button id="ButtonAddChild" type="button" class="btn btn-sm btn-secondary visible" onclick="AddItem(this)"> Ekle </button>
+                                        <button id="ButtonAddChild" type="button" class="btn btn-sm btn-secondary visible" onclick="AddItem('ChildTable')"> Ekle </button>
                                     </th>
                                 </tr>
                             </thead>
@@ -37,13 +37,13 @@
                                 {
                                     <tr>
                                         <td>
-                                            <input type="text" asp-for="Children[i].Id" class="form-control">
+                                            <input type="text" asp-for="@Model.Children[i].Id" class="form-control">
                                         </td>
-                                        <td>
+                                       @* <td>
                                             <input type="text" asp-for="Children[i].ParentId" class="form-control">
-                                        </td>
+                                        </td>*@
                                         <td>
-                                            <input asp-for="Children[i].Name" class="form-control" />
+                                            <input asp-for="@Model.Children[i].Name" class="form-control" />
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-danger" onclick="RemoveItem(this)">Sil</button>
@@ -64,27 +64,3 @@
         </div>
     </div>
 </div>
-
-<script>
-
-    function AddItem(button) {
-        
-        var parentId = $('#editParent input[name="Id"]').val();
-        
-        var table = $(button).closest('table');
-        var tr = $(table).find('tbody tr:first').clone();
-        $(tr).find('input').val('');
-        $(tr).find('span').text('');
-        $(table).find('tbody').append(tr);
-
-        $('#editParent input[name="Children[0].ParentId"]').val(parentId);
-        $(tr).find('input[name="Children[0].Id"]').val(0);
-    }
-
-    function RemoveItem(button) {
-        var table = $(button).closest('table');
-        var tr = $(button).closest('tr');
-        $(tr).remove();
-    }
-
-</script>

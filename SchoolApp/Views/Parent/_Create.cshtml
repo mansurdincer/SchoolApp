@@ -18,14 +18,13 @@
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name"></span>
                     </div>
-                    <div>
-                        <table class="table">
+                    <div style="height:250px; overflow-y:auto;">
+                        <table id="ChildTable" class="table">
                             <thead>
-                                <tr>
-                                    <th>ChildId</th>
+                                <tr>                                   
                                     <th>Child Name</th>
                                     <th style="width:75px;">
-                                        <button id="ButtonAddChild" type="button" class="btn btn-sm btn-secondary visible" onclick="AddItem(this)"> Ekle </button>
+                                        <button id="ButtonAddChild" type="button" class="btn btn-sm btn-secondary visible" onclick="AddItem('ChildTable')"> Ekle </button>
                                     </th>
                                 </tr>
                             </thead>
@@ -33,10 +32,7 @@
 
                                 @for (int i = 0; i < Model.Children.Count; i++)
                                 {
-                                    <tr>
-                                        <td>
-                                            <input type="text" asp-for="Children[i].Id" class="form-control">
-                                        </td>
+                                    <tr>                                       
                                         <td>
                                             <input asp-for="Children[i].Name" class="form-control" />
                                         </td>
@@ -49,6 +45,9 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <input type="hidden" id="hiddenTableLastIndex" value="0" />
+                    
                 </form>
             </div>
 
@@ -59,21 +58,3 @@
         </div>
     </div>
 </div>
-
-<script>
-
-    function AddItem(button) {
-        var table = $(button).closest('table');
-        var tr = $(table).find('tbody tr:first').clone();
-        $(tr).find('input').val('');
-        $(tr).find('span').text('');
-        $(table).find('tbody').append(tr);
-    }
-
-    function RemoveItem(button) {
-        var table = $(button).closest('table');
-        var tr = $(button).closest('tr');
-        $(tr).remove();
-    }
-
-</script>

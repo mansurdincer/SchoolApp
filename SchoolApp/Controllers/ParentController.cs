@@ -30,23 +30,28 @@ namespace SchoolApp.Controllers
         public IActionResult Create()
         {
             Parent parent = new();
-            
-            parent.Children.Add(new Child { Name = "" });
-            parent.Children.Add(new Child { Name = "" });
-            
+
+            parent.Children.Add(new Child());
+            parent.Children.Add(new Child());
+
             return PartialView("_Create", parent);
         }
 
         [HttpPost]
         public IActionResult Create(Parent parent)
         {
-            if (ModelState.IsValid)
-            {
-                _db.Add(parent);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(parent);
+            //foreach (var child in parent.Children)
+            //{
+            //    child.Parent = parent;
+            //}
+
+            //if (ModelState.IsValid)
+            //{
+            _db.Add(parent);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+            //}
+            //return View(parent);
         }
 
         public IActionResult Edit(int id)
@@ -74,10 +79,12 @@ namespace SchoolApp.Controllers
                     {
                         _db.Children.Update(child);
                     }
-                    else if (child.Id < 0)
-                    {
-                        _db.Children.Remove(child);
-                    }
+                    //fix need here!
+                    //else if (child.Id < 0)
+                    //{
+                    //    _db.Children.Remove(child);
+                    //}
+
                 }
                 _db.SaveChanges();
 
