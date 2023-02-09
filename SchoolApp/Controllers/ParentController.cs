@@ -67,6 +67,18 @@ namespace SchoolApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+
+                //delete children that are not in the parent anymore
+                var children = _db.Children.Where(c => c.ParentId == parent.Id).ToList();
+                foreach (var child in children)
+                {
+                    if (!parent.Children.Contains(child))
+                    {
+                        _db.Children.Remove(child);
+                    }
+                }
+
+
                 _db.Parents.Update(parent);
 
                 foreach (var child in parent.Children)
@@ -79,12 +91,6 @@ namespace SchoolApp.Controllers
                     {
                         _db.Children.Update(child);
                     }
-                    //fix need here!
-                    //else if (child.Id < 0)
-                    //{
-                    //    _db.Children.Remove(child);
-                    //}
-
                 }
                 _db.SaveChanges();
 
