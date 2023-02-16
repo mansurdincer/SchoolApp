@@ -58,9 +58,16 @@ function RemoveItem(button) {
         $(tr).remove();
     }
 
-    $('table tbody tr').each(function (index) {
-        $(this).find('input[name="Children.Index"]').val(index);
-        $(this).find('input[name="Children[].Id"]').attr('name', 'Children[' + index + '].Id');
-        $(this).find('input[name="Children[].Name"]').attr('name', 'Children[' + index + '].Name');
+    var itemIndex = -1;
+    $('#ChildTable tr').each(function () {
+        var this_row = $(this);
+
+        console.log(itemIndex);
+        this_row.find('input[name$=".Id"]').attr('name', 'Children[' + itemIndex + '].Id');
+
+        this_row.find('input[name$=".Name"]').attr('name', 'Children[' + itemIndex + '].Name');
+
+        itemIndex++;
     });
+   
 }

@@ -24,7 +24,7 @@
                             <thead>
                                 <tr>
                                     <th>ChildId</th>
-                                    @*<th>ParentId</th>*@
+                                   
                                     <th>Child Name</th>
                                     <th style="width:75px;">
                                         <button id="ButtonAddChild" type="button" class="btn btn-sm btn-secondary visible" onclick="AddItem('ChildTable')"> Ekle </button>
@@ -39,9 +39,7 @@
                                         <td>
                                             <input type="text" asp-for="@Model.Children[i].Id" class="form-control">
                                         </td>
-                                       @* <td>
-                                            <input type="text" asp-for="Children[i].ParentId" class="form-control">
-                                        </td>*@
+                                      
                                         <td>
                                             <input asp-for="@Model.Children[i].Name" class="form-control" />
                                         </td>
