@@ -7,22 +7,22 @@ namespace SchoolApp.Controllers
 {
     public class ParentController : Controller
     {
-        private readonly MyDbContext _db;
+        private readonly MyDbContext _context;
 
-        public ParentController(MyDbContext db)
+        public ParentController(MyDbContext context)
         {
-            _db = db;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            var parents = _db.Parents.Include(p => p.Children).ToList();
+            var parents = _context.Parents.Include(p => p.Children).ToList();
             return View(parents);
         }
 
         public IActionResult Details(int id)
         {
-            var parent = _db.Parents.Include(p => p.Children).FirstOrDefault(p => p.Id == id);
+            var parent = _context.Parents.Include(p => p.Children).FirstOrDefault(p => p.Id == id);
 
             return PartialView("_Details", parent);
         }
@@ -47,8 +47,8 @@ namespace SchoolApp.Controllers
 
             //if (ModelState.IsValid)
             //{
-            _db.Add(parent);
-            _db.SaveChanges();
+            _context.Add(parent);
+            _context.SaveChanges();
             return RedirectToAction("Index");
             //}
             //return View(parent);
@@ -56,8 +56,8 @@ namespace SchoolApp.Controllers
 
         public IActionResult Edit(int id)
         {
-            var parent = _db.Parents.FirstOrDefault(p => p.Id == id);
-            parent.Children = _db.Children.Where(c => c.ParentId == id).ToList();
+            var parent = _context.Parents.FirstOrDefault(p => p.Id == id);
+            parent.Children = _context.Children.Where(c => c.ParentId == id).ToList();
 
             return PartialView("_Edit", parent);
         }
@@ -69,30 +69,30 @@ namespace SchoolApp.Controllers
             {
 
                 //delete children that are not in the parent anymore
-                var children = _db.Children.Where(c => c.ParentId == parent.Id).ToList();
+                var children = _context.Children.Where(c => c.ParentId == parent.Id).ToList();
                 foreach (var child in children)
                 {
                     if (!parent.Children.Contains(child))
                     {
-                        _db.Children.Remove(child);
+                        _context.Children.Remove(child);
                     }
                 }
 
 
-                _db.Parents.Update(parent);
+               _context.Parents.Update(parent);
 
                 foreach (var child in parent.Children)
                 {
                     if (child.Id == 0)
                     {
-                        _db.Children.Add(child);
+                        _context.Children.Add(child);
                     }
                     else if (child.Id > 0)
                     {
-                        _db.Children.Update(child);
+                        _context.Children.Update(child);
                     }
                 }
-                _db.SaveChanges();
+                _context.SaveChanges();
 
             }
             return View(parent);
@@ -100,16 +100,16 @@ namespace SchoolApp.Controllers
 
         public IActionResult Delete(int id)
         {
-            var parent = _db.Parents.FirstOrDefault(p => p.Id == id);
-            parent.Children = _db.Children.Where(c => c.ParentId == id).ToList();
+            var parent = _context.Parents.FirstOrDefault(p => p.Id == id);
+            parent.Children = _context.Children.Where(c => c.ParentId == id).ToList();
             return PartialView("_Delete", parent);
         }
 
         [HttpPost]
         public IActionResult Delete(Parent parent)
         {
-            _db.Parents.Remove(parent);
-            _db.SaveChanges();
+            _context.Parents.Remove(parent);
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
     }

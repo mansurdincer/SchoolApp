@@ -11,8 +11,8 @@ using SchoolApp.Data;
 namespace SchoolApp.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230130113101_PostAndComments")]
-    partial class PostAndComments
+    [Migration("20230317130825_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

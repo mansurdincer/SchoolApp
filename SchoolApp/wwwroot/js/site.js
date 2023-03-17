@@ -61,12 +61,9 @@ function RemoveItem(button) {
     var itemIndex = -1;
     $('#ChildTable tr').each(function () {
         var this_row = $(this);
-
         console.log(itemIndex);
         this_row.find('input[name$=".Id"]').attr('name', 'Children[' + itemIndex + '].Id');
-
         this_row.find('input[name$=".Name"]').attr('name', 'Children[' + itemIndex + '].Name');
-
         itemIndex++;
     });
    
